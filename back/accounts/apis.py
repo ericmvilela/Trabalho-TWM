@@ -68,7 +68,7 @@ class LogoutApi(views.APIView):
 
     def post(self, request):
         resp = response.Response()
-        resp.delete_cookie('jwt', samesite='none')
+        resp.delete_cookie('jwt')
 
         resp.data = {'message': "Volte sempre"}
 

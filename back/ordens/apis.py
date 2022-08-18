@@ -24,17 +24,23 @@ class SetOrdem(views.APIView):
         return response.Response(newSerializer.data)
 
     def get(self, request):
+
         if request.user.tecnico:
             todasOrdems = []
             for ordem in Ordem.objects.all():
                 serializer = ordem_serializer.OrdemSerializerGet(ordem)
                 serializer.data['estado-completo'] = ordem.get_estado_display()
-                print(serializer.data)
                 todasOrdems.append(serializer.data)
-
             return response.Response(todasOrdems)
 
-        raise exceptions.AuthenticationFailed('Necessário ser técnico')
+        else:
+            todasOrdems = []
+            for ordem in Ordem.objects.filter(user=request.user):
+                serializer = ordem_serializer.OrdemSerializerGet(ordem)
+                serializer.data['estado-completo'] = ordem.get_estado_display()
+                todasOrdems.append(serializer.data)
+
+            return response.Response(todasOrdems[::-1])
 
     def patch(self, request):
         if request.user.tecnico:
@@ -43,6 +49,20 @@ class SetOrdem(views.APIView):
                 raise exceptions.ParseError('Valor inválido')
 
             ordem = Ordem.objects.filter(id=request.data['id']).first()
+            ordem.estado = request.data['estado']
+            ordem.save()
+
+            serializer = ordem_serializer.OrdemSerializer(ordem)
+            return response.Response(serializer.data)
+
+        else:
+            if request.data['estado'] != 'C':
+                raise exceptions.ParseError('Valor inválido')
+
+            ordem = Ordem.objects.filter(id=request.data['id']).first()
+            if ordem.user != request.user:
+                raise exceptions.PermissionDenied('Não foi possivel cancelar')
+
             ordem.estado = request.data['estado']
             ordem.save()
 

@@ -70,15 +70,22 @@ function Navbar(props)
                 {userState?
                 isTecnico?
                 <>
-                <li>
-                    <Link to="/ordens-tecnico">Ordem de Serviço</Link>
-                </li></>:
-                <><li>
-                <Link to="/produtos">Produtos</Link>
-                </li>
-                <li>
-                    <Link to="/ordens-cliente">Suporte</Link>
-                </li></>
+                    <li>
+                        <Link to="/ordens-tecnico">Ordem de Serviço</Link>
+                    </li>
+                </>:
+                
+                <>
+                    <li>
+                        <Link to="/produtos">Produtos</Link>
+                    </li>
+                    <li>
+                        <Link to="/ordens-cliente">Suporte</Link>
+                    </li>
+                    <li>
+                        <Link to="/minhas-ordens">Minhas Ordens</Link>
+                    </li>
+                </>
                 :null
                 }
                 

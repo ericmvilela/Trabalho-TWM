@@ -62,7 +62,7 @@ function Ordem(props)
                 { withCredentials: true }
             )
 
-            window.location.reload(false);
+            getOrdens()
         }
         catch (err)
         {

@@ -59,7 +59,7 @@ function Ordem(props)
                 { withCredentials: true,
                     headers: {'Content-Type': 'multipart/form-data'} },
             );
-            window.location.href = '/'
+            window.location.href = '/minhas-ordens'
         }
         catch(err)
         {

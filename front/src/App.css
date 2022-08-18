@@ -189,6 +189,16 @@ label
     background: linear-gradient(to bottom right, black, green);
 }
 
+.estado-F
+{
+    background: linear-gradient(to bottom right, red, green);
+}
+
+.estado-C
+{
+    background: linear-gradient(to bottom right, black, red);
+}
+
 .imgContainer
 {
     display: flex;
